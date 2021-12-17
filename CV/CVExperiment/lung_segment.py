@@ -1,6 +1,4 @@
 # 本案例通过分水岭算法对一幅肺癌细胞图像进行分割，代码给出了较详细必要的注释
-
-
 from cv2 import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
@@ -31,7 +29,8 @@ def watershed_demo(img):
     # 发现未知的区域
     surface_fg = np.uint8(surface)
     cv.imshow('surface_bin', surface_fg)
-    unknown = cv.subtract(sure_bg,surface_fg)
+    unknown = cv.subtract(sure_bg, surface_fg)
+
     # 标记标签
     ret, markers = cv.connectedComponents(surface_fg)
     # 添加一个标签到所有标签，这样确保背景不是0，而是1
@@ -43,11 +42,11 @@ def watershed_demo(img):
     cv.imshow('result', img)
 
 
-img = cv.imread('CV-Pictures/lung.jpg', cv.IMREAD_REDUCED_COLOR_2)
+img = cv.imread('lung.jpg', cv.IMREAD_REDUCED_COLOR_2)
 # 本案例给出的待分割肺部图片看起来貌似像灰#度图，其实是三通道的图（大家可以通过查看其shape属性验证，由于图像较大所以读入时让其以原图像的1/2尺寸显示）
 
-cv.namedWindow('img',cv.WINDOW_AUTOSIZE)
-cv.imshow('img',img)
+cv.namedWindow('img', cv.WINDOW_AUTOSIZE)
+cv.imshow('img', img)
 watershed_demo(img)
 cv.waitKey(0)
 cv.destroyAllWindows()
